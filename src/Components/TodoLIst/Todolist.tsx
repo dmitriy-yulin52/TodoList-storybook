@@ -1,11 +1,11 @@
-import React, { useCallback} from 'react'
+import React, {ChangeEvent, useCallback} from 'react'
 import {EditableSpan} from "../Task/EditableSpan/EditableSpan";
 import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {TitleType} from '../../AppWithRedux';
 
 import {Task} from "../Task/Task";
-import {AddTaskAC} from "../../state/task-reducer";
+import {AddTaskAC, AddTaskTitleAC, changeTaskStatusAC, RemoveTaskAC} from "../../state/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {AppRootStateType} from "../../state/store";
@@ -86,12 +86,25 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
                 <React.Fragment>
                     <ul>
                         {
+
                             tasksForTodoList.map((t) => {
+                                const removeTaskHandler = () => {
+                                    dispatch(RemoveTaskAC(t.id, props.todoListId))
+                                }
+                                const isDoneHandler = (isDone:boolean) => {
+                                    dispatch(changeTaskStatusAC(t.id, isDone, props.todoListId))
+                                }
+                                const changeTitleHandler = (title: string) => {
+                                    dispatch(AddTaskTitleAC(t.id, title, props.todoListId))
+                                }
                                 return (
                                     <Task
                                         task={t}
                                         todoListId={props.todoListId}
                                         key={t.id}
+                                        removeTaskHandler={removeTaskHandler}
+                                        isDoneHandler={isDoneHandler}
+                                        changeTitleHandler={changeTitleHandler}
                                     />
                                 )
                             })

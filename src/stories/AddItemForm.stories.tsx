@@ -20,6 +20,8 @@ export default{
 } as Meta
 
 
+// const callback = action('Button inside form clicked')
+
 const Template:Story<AddItemFormPropsType> = (args)=> <AddItemForm {...args}/>
 
 
