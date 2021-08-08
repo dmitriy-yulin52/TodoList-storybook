@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {TaskType} from "../Todolist";
+import {TaskType} from "../Components/TodoLIst/Todolist";
 import {AddTodoListAT, RemoveTodoListAT, TODOLIST_ACTION_TYPE} from "./todoList-reducer";
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {AddItemForm} from "../AddItemForm";
+import {AddItemForm} from "../Components/TodoLIst/AddItemForm/AddItemForm";
 import {Meta,Story} from "@storybook/react";
 import {action} from "@storybook/addon-actions";
 
