@@ -1,38 +1,47 @@
-.App {
-  text-align: center;
+
+/*body{*/
+/*  background: url("https://w-dog.ru/wallpapers/1/73/298438981564223/planeta-art-pejzazh-kosmos.jpg");*/
+/*}*/
+
+/*.toDoList {*/
+/* margin: 0 auto;*/
+/*}*/
+
+.error {
+  border: red 2px solid;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.errorMessage{
+  margin-top: 3px;
   color: white;
+  background-color: red;
+  border-radius: 2px;
+  width:168px;
 }
 
-.App-link {
-  color: #61dafb;
+.activeFilter {
+  background-color: dodgerblue;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  border-radius: 10px;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 10px 0 10px 0;
+  padding: 0;
+}
+
+
+.listTitle {
+  cursor: pointer;
+}
+.isDone {
+  opacity: 0.3;
+}
+
+.editModeInput {
+  outline: none;
 }
