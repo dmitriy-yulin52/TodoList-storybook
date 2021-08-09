@@ -10,7 +10,7 @@ type AddItemFormPropsType = {
 
 
 export default{
-    title: 'TodoLIst/addItemForm',
+    title: 'TodoLIst/AddItemForm',
     component: AddItemForm,
     argTypes:{
         onClick:{
@@ -25,8 +25,8 @@ export default{
 const Template:Story<AddItemFormPropsType> = (args)=> <AddItemForm {...args}/>
 
 
-export const AddItemFormExample = Template.bind({})
+export const AddItemFormBaseExample = Template.bind({})
 
-AddItemFormExample.args = {
+AddItemFormBaseExample.args = {
     addItem: action('Button inside form clicked')
 }
