@@ -8,7 +8,6 @@
 //
 // }
 
-
 import React from 'react'
 import {Provider} from 'react-redux'
 import {combineReducers, createStore} from 'redux'
@@ -41,7 +40,7 @@ const initialGlobalState = {
 
 export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);
 
-export const ReduxStoreProviderDecorator = (storyFn: any) => (
+export const ReduxStoreProviderDecorator = (storyFn: ()=> React.ReactNode) => (
     <Provider
         store={storyBookStore}
         >{storyFn()}
