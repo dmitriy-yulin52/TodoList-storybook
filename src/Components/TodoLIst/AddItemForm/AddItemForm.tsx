@@ -51,7 +51,7 @@ export const  AddItemForm = React.memo( (props: AddItemFormPropsType)=> {
                 size={'small'}
                 color={'primary'}
             >
-                <AddBox fontSize={'large'}/>!
+                <AddBox fontSize={'large'}/>
             </IconButton>
             <div style={error ? {color: 'red'} : {display: 'none'}}>{errorMessage}</div>
         </div>
