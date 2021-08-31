@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {TitleType} from "../AppWithRedux";
-import {ResponseTodoListType} from "../api/todoList-api";
+import {ResponseTodoListType, TodoListApi} from "../api/todoList-api";
+import {Dispatch, ReactNode} from "react";
 
 
 
@@ -120,5 +121,13 @@ export const setTodolistsAC = (todoLists: Array<ResponseTodoListType>): SetTodol
         todoLists
     }
 }
+
+export const fetchTodolistsThunk = (dispatch: Dispatch<ReactNode>) => {
+    TodoListApi.getTodoLists()
+        .then((res) => {
+            dispatch(setTodolistsAC(res.data))
+        }).catch((err)=> console.log(err))
+}
+
 
 

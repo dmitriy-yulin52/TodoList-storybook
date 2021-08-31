@@ -8,7 +8,7 @@ import {Menu} from '@material-ui/icons';
 import {
     addTodoListAC,
     changeTodoListFilterAC,
-    changeTodoListTitleAC,
+    changeTodoListTitleAC, fetchTodolistsThunk,
     removeTodoListAC, setTodolistsAC, TodoListType,
 } from "./state/todoList-reducer";
 
@@ -19,37 +19,32 @@ import {TodoListApi} from "./api/todoList-api";
 export type TitleType = "All" | "Active" | "Completed"
 
 
-export const AppWithRedux = React.memo(()=> {
+export const AppWithRedux = React.memo(() => {
     console.log('AppWithRedux')
 
-    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state=>state.todoLists)
+    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoLists)
     const dispatch = useDispatch()
 
-    const changeTodoListFilter = useCallback((title: TitleType, todoListId: string)=> {
-        let action = changeTodoListFilterAC(title,todoListId)
+    const changeTodoListFilter = useCallback((title: TitleType, todoListId: string) => {
+        let action = changeTodoListFilterAC(title, todoListId)
         dispatch(action)
-    },[dispatch])
-    const removeTodoList = useCallback((todoListId: string)=> {
+    }, [dispatch])
+    const removeTodoList = useCallback((todoListId: string) => {
         let action = removeTodoListAC(todoListId)
         dispatch(action)
-    },[dispatch])
-    const addTodolist = useCallback((title: string)=> {
+    }, [dispatch])
+    const addTodolist = useCallback((title: string) => {
         let action = addTodoListAC(title)
         dispatch(action)
-    },[dispatch])
-    const changeTodoListTitle = useCallback((title: string, todoListId: string)=> {
-        let action = changeTodoListTitleAC(title,todoListId)
+    }, [dispatch])
+    const changeTodoListTitle = useCallback((title: string, todoListId: string) => {
+        let action = changeTodoListTitleAC(title, todoListId)
         dispatch(action)
-    },[dispatch])
+    }, [dispatch])
 
-    useEffect(()=>{
-        TodoListApi.getTodoLists()
-            .then((res)=>{
-                let todos = res.data
-                dispatch(setTodolistsAC(todos))
-            })
-    },[])
-
+    useEffect(() => {
+        dispatch(fetchTodolistsThunk)
+    }, [])
 
 
     const todoListsElements = todoLists.map(tl => {
