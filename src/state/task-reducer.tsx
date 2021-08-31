@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 import {TaskType} from "../Components/TodoLIst/Todolist";
-import {AddTodoListAT, RemoveTodoListAT, TODOLIST_ACTION_TYPE} from "./todoList-reducer";
+import {AddTodoListAT, RemoveTodoListAT, SetTodolistsActionType, TODOLIST_ACTION_TYPE} from "./todoList-reducer";
+import {ResponseTodoListType} from "../api/todoList-api";
 
 
 const initialState: TasksStateType = {}
@@ -47,6 +48,7 @@ export type ACType =
     | addTaskTitleACType
     | AddTodoListAT
     | RemoveTodoListAT
+    | SetTodolistsActionType
 
 
 export const taskReducer = (state: TasksStateType = initialState, action: ACType) => {
@@ -98,6 +100,14 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
             delete copyState[action.todoListId]
             return copyState
         }
+        case TODOLIST_ACTION_TYPE.SET_TODOlIST: {
+            const stateCopy = {...state}
+            action.todoLists.forEach((tl) => {
+                stateCopy[tl.id] = []
+            })
+            return stateCopy;
+        }
+
         default:
             return state
 
@@ -147,3 +157,4 @@ export const RemoveTodolistAC = (todoListId: string): RemoveTodoListAT => {
         todoListId
     }
 }
+
