@@ -8,12 +8,6 @@ const instance = axios.create({
     }
 })
 
-// const settings = {
-//     withCredentials: true,
-//     headers: {
-//         'API-KEY': '0d4603e0-cc09-411a-94af-0a9525e55f79'
-//     }
-// }
 
 
 type CommonResponseType<T = {}> = {
