@@ -3,55 +3,59 @@ import {TextField} from '@material-ui/core'
 
 
 type EditableSpanPropsType = {
-    title: string
-    changeTitle: (title: string) => void
+    value: string
+    onChange: (title: string) => void
 }
 
 export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     console.log('editableSpan')
 
-    const [editMode, setEditMode] = useState<boolean>(false)
-    const [titleSpan, setTitleSpan] = useState<string>('')
+    const [editMode, setEditMode] = useState(false)
+    const [title, setTitle] = useState(props.value)
 
-    const onEditMode = () => {
+    const activateEditMode = () => {
         setEditMode(true)
-        setTitleSpan('')
+        setTitle(props.value)
     }
-    const offEditMode = () => {
-        if (titleSpan) {
-            props.changeTitle(titleSpan)
-        } else {
-            setTitleSpan(props.title)
-        }
-        setEditMode(false)
+    // const offEditMode = () => {
+    //     if (title) {
+    //         props.changeTitle(title)
+    //     } else {
+    //         setTitle(props.title)
+    //     }
+    //     setEditMode(false)
+    // }
+
+    const activateViewMode = () => {
+        setEditMode(false);
+        props.onChange(title);
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitleSpan(e.currentTarget.value)
+    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            offEditMode()
+            activateViewMode()
         }
 
     }
 
     return (
-
         editMode
             ? <TextField
-            value={titleSpan}
+                value={title}
                 autoFocus
-                onBlur={offEditMode}
-                onChange={onChangeHandler}
+                onBlur={activateViewMode}
+                onChange={changeTitle}
                 onKeyPress={onKeyPressHandler}
                 size={'small'}
                 style={{color: 'white'}}
             />
             : <span
-                onDoubleClick={onEditMode}
+                onDoubleClick={activateEditMode}
             >
-                    {props.title}
+                    {props.value}
             </span>
     )
 })

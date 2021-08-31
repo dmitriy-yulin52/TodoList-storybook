@@ -2,6 +2,11 @@ import React from 'react';
 
 import {Task} from "../Components/Task/Task";
 import {action} from "@storybook/addon-actions";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todoList-api";
+import {v1} from "uuid";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../app/store";
+import {TasksStateType} from "../state/task-reducer";
 
 export default {
     title: 'TodoList/Task',
@@ -35,23 +40,49 @@ const removeTaskCallback = action('Remove button inside Task clicked')
 //     task: {id: '1', isDone: false, title: 'JS'},
 //     todoListId: 'todolistId1'
 // };
-
-
-export const TaskBaseExample = () => {
-    return <>
-        <Task
-            task={{id: '1', isDone: true, title: 'JS'}}
-            todoListId={'todoListId1'}
-            removeTaskHandler={removeTaskCallback}
-            isDoneHandler={changeTaskStatusCallback}
-            changeTitleHandler={changeTaskTitleCallback}
-        />
-        <Task
-            task={{id: '2', isDone: false, title: 'JS'}}
-            todoListId={'todoListId2'}
-            removeTaskHandler={removeTaskCallback}
-            isDoneHandler={changeTaskStatusCallback}
-            changeTitleHandler={changeTaskTitleCallback}
-        />
-    </>
-}
+// const tasksStatus = TaskStatuses
+//
+// export const TaskBaseExample = () => {
+//     return <>
+//         <Task
+//             task={
+//                 {
+//                     id: '1',
+//                     title: 'JS',
+//                     description: 'JS',
+//                     status: tasksStatus,
+//                     priority: TaskPriorities,
+//                     startDate: '20:10',
+//                     deadline: 'line',
+//                     todoListId: v1(),
+//                     order: 2,
+//                     addedDate: '20:11',
+//                 }
+//             }
+//             todoListId={'todoListId1'}
+//             removeTaskHandler={removeTaskCallback}
+//             isDoneHandler={changeTaskStatusCallback}
+//             changeTitleHandler={changeTaskTitleCallback}
+//         />
+//         <Task
+//             task={
+//                 {
+//                     id: '1',
+//                     title: 'JS',
+//                     description: 'JS',
+//                     status: Statuses,
+//                     priority: Priorities,
+//                     startDate: '20:10',
+//                     deadline: 'line',
+//                     todoListId: v1(),
+//                     order: 2,
+//                     addedDate: '20:11',
+//                 }
+//             }
+//             todoListId={'todoListId2'}
+//             removeTaskHandler={removeTaskCallback}
+//             isDoneHandler={changeTaskStatusCallback}
+//             changeTitleHandler={changeTaskTitleCallback}
+//         />
+//     </>
+// }

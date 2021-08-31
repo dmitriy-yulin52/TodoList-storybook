@@ -13,8 +13,8 @@ const changeTitleCallback = action('Title changed')
 export const EditableSpanBaseExample = ()=>{
     return <>
         <EditableSpan
-            title={'Hello World!'}
-            changeTitle={changeTitleCallback}
+            value={'Hello World!'}
+            onChange={changeTitleCallback}
         />
     </>
 }
