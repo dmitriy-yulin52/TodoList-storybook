@@ -1,7 +1,6 @@
 import {v1} from "uuid";
-import {TaskType} from "../features/TodoListsList/TodoLIst/Todolist";
 import {AddTodoListAT, RemoveTodoListAT, SetTodolistsActionType, TODOLIST_ACTION_TYPE} from "./todoList-reducer";
-import {ResponseTodoListType, TodoListApi} from "../api/todoList-api";
+import {TaskType, TodoListApi} from "../api/todoList-api";
 import { Dispatch } from "redux";
 
 
@@ -22,8 +21,7 @@ export type RemoveTaskActionACType = {
 }
 export type AddTaskACType = {
     type: ACTION_TYPE.ADD_TASK
-    title: string
-    todoListId: string
+    task:TaskType
 }
 export type changeTaskStatusACType = {
     type: ACTION_TYPE.CHANGE_TASK_STATUS
@@ -47,7 +45,6 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-
 export type ACType =
     RemoveTaskActionACType
     | AddTaskACType
@@ -70,22 +67,14 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
             return copyState
         }
         case ACTION_TYPE.ADD_TASK: {
-            let copyState = {...state}
-            const newTask: TaskType = {id: v1(), title: action.title, isDone: false}
-            copyState[action.todoListId] = [newTask, ...state[action.todoListId]];
-            return copyState
+            // let copyState = {...state}
+            // const newTask = {id: v1(), title: action.title, isDone: false}
+            // copyState[action.todoListId] = [newTask, ...state[action.todoListId]];
+            // return copyState
             // const newTask:TaskType = {id: v1(), title: action.title, isDone: false}
-            // return {...state, [action.todoListId]: [newTask,...state[action.todoListId]]}
+            return {...state, [action.task.todoListId]: [action.task,...state[action.task.todoListId]]}
         }
         case ACTION_TYPE.CHANGE_TASK_STATUS: {
-            // const copyState = {...state}
-            // copyState[action.todoListId] = copyState[action.todoListId].map((task) => {
-            //     if (task.id === action.taskId) {
-            //         return {...task, isDone: action.isDone}
-            //     }
-            //     return task
-            // })
-            // return copyState
             const copyTask = state[action.todoListId]
             state[action.todoListId] = copyTask.map(el=>el.id === action.taskId ? {...el,isDone:action.isDone}:el)
             return {...state}
@@ -116,11 +105,11 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
             return stateCopy;
         }
         case ACTION_TYPE.SET_TASKS: {
-            const stateCopy = {...state}
-            stateCopy[action.todolistId] = action.tasks
-            return stateCopy
+            // const stateCopy = {...state}
+            // stateCopy[action.todolistId] = action.tasks
+            // return stateCopy
+            return {...state, [action.todolistId]: action.tasks}
         }
-
         default:
             return state
 
@@ -134,11 +123,17 @@ export const RemoveTaskAC = (taskId: string, todoListId: string): RemoveTaskActi
         todoListId
     }
 }
-export const AddTaskAC = (title: string, todoListId: string): AddTaskACType => {
+// export const AddTaskAC = (title: string, todoListId: string): AddTaskACType => {
+//     return {
+//         type: ACTION_TYPE.ADD_TASK,
+//         title,
+//         todoListId
+//     }
+// }
+export const AddTaskAC = (task:TaskType): AddTaskACType => {
     return {
         type: ACTION_TYPE.ADD_TASK,
-        title,
-        todoListId
+        task,
     }
 }
 export const changeTaskStatusAC = (taskId: string, isDone: boolean, todoListId: string): changeTaskStatusACType => {
@@ -187,4 +182,12 @@ export const fetchTasksTC = (todolistId: string) => {
                 dispatch(action)
             })
     }
+}
+export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ACType>) => {
+    TodoListApi.createTask(todolistId, title)
+        .then(res => {
+            const task = res.data.data.item
+            const action = AddTaskAC(task)
+            dispatch(action)
+        })
 }

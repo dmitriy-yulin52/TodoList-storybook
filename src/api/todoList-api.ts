@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL:`https://social-network.samuraijs.com/api/1.1/`,
+    baseURL: `https://social-network.samuraijs.com/api/1.1/`,
     withCredentials: true,
     headers: {
         'API-KEY': '01ebcbdb-182e-4a23-b6f8-105b08a3a54e'
@@ -11,10 +11,10 @@ const instance = axios.create({
 
 export const TodoListApi = {
     getTodoLists() {
-        return instance.get<ResponseTodoListType[]>('todo-lists')
+        return instance.get<TodoListTypeRes[]>('todo-lists')
     },
     createTodoLists() {
-        return instance.post<ResponseType<{ item: ResponseTodoListType }>>('todo-lists', {title: "newTodolist"})
+        return instance.post<ResponseType<{ item: TodoListTypeRes }>>('todo-lists', {title: "newTodolist"})
     },
     deleteTodoLists() {
         const todolistId = '54896ba7-93cf-40e1-b79f-0b8e2a58222d';
@@ -25,12 +25,21 @@ export const TodoListApi = {
         const todolistId = '1dc8d7be-2e3e-4143-a11f-c237d5b3fdf8'
         return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title: 'newUpdate-todo-title'})
     },
-    getTasks(todolistId:string){
+    getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
+    },
+    createTask(todolistId: string, taskTitle: string) {
+        return instance.post<ResponseType>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
+    },
+    deleteTask(todolistId:string, taskId:string){
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    updateTask(todolistId:string, taskId:string, model:UpdateTaskModelType){
+        return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`,model)
     }
 }
 
-export type ResponseTodoListType = {
+export type TodoListTypeRes = {
     id: string
     title: string
     addedDate: string
@@ -41,12 +50,14 @@ export type ResponseType<D = {}> = {
     messages: Array<string>
     data: D
 }
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
     Completed = 2,
     Draft = 3
 }
+
 export enum TaskPriorities {
     Low = 0,
     Middle = 1,
@@ -54,6 +65,7 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
+
 export type TaskType = {
     description: string
     title: string

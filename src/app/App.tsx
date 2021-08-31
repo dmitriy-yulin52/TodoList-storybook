@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
 import AppBar from '@material-ui/core/AppBar';
-import {IconButton, Typography, Button, Toolbar, Container} from '@material-ui/core';
+import {IconButton, Typography, Button, Toolbar, Container, Grid, Paper} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 
 import {TodoListsList} from "../features/TodoListsList/TodoListsList";
 
-export type TitleType = "All" | "Active" | "Completed"
 
 
-export const App = () => {
+
+export const App = React.memo(() => {
 
     return (
         <div className={'App'}>
@@ -33,5 +33,5 @@ export const App = () => {
             </Container>
         </div>
     );
-}
+})
 

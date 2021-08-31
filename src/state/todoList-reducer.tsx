@@ -1,10 +1,9 @@
 import {v1} from "uuid";
-import {TitleType} from "../app/App";
-import {ResponseTodoListType, TodoListApi} from "../api/todoList-api";
+import {TodoListApi, TodoListTypeRes} from "../api/todoList-api";
 import { Dispatch } from "redux";
 
 
-
+export type TitleType = "All" | "Active" | "Completed"
 
 export enum TODOLIST_ACTION_TYPE {
     REMOVE_TODOLIST = 'todoList-reducer/REMOVE-TODOLIST',
@@ -36,7 +35,7 @@ export type ChangeTodoListFilterAT = {
 
 export type SetTodolistsActionType = {
     type: TODOLIST_ACTION_TYPE.SET_TODOlIST
-    todoLists: Array<ResponseTodoListType>
+    todoLists: Array<TodoListTypeRes>
 }
 
 export type TodoListType = {
@@ -52,17 +51,19 @@ export type ACType =
     | ChangeTodoListFilterAT
     | SetTodolistsActionType
 
-const initialState: Array<TodoListType> = []
+const initialState: Array<TodoListDomainType> = []
+export type TodoListDomainType =  TodoListTypeRes & {
+    filter:TitleType
+}
 
 
-
-export const todoListReducer = (todoLists: Array<TodoListType> = initialState, action: ACType) => {
+export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialState, action: ACType) => {
 
     switch (action.type) {
         case TODOLIST_ACTION_TYPE.REMOVE_TODOLIST:
             return todoLists.filter(tl => tl.id !== action.todoListId)
         case TODOLIST_ACTION_TYPE.ADD_TODOLIST:
-            const newTodolist: TodoListType = {
+            const newTodolist = {
                 id: action.todoListId,
                 title: action.title,
                 filter: 'All'
@@ -80,7 +81,7 @@ export const todoListReducer = (todoLists: Array<TodoListType> = initialState, a
         case TODOLIST_ACTION_TYPE.SET_TODOlIST: {
             return action.todoLists.map(tl => ({
                 ...tl,
-                filter: 'all'
+                filter: 'All'
             }))
         }
         default:
@@ -114,8 +115,7 @@ export const changeTodoListFilterAC = (title: TitleType, todoListId: string): Ch
         todoListId: todoListId
     }
 }
-
-export const setTodolistsAC = (todoLists: Array<ResponseTodoListType>): SetTodolistsActionType => {
+export const setTodolistsAC = (todoLists: Array<TodoListTypeRes>): SetTodolistsActionType => {
     return {
         type: TODOLIST_ACTION_TYPE.SET_TODOlIST,
         todoLists

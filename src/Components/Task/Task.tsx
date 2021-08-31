@@ -1,10 +1,8 @@
 import React, {ChangeEvent, useCallback} from 'react'
 import {EditableSpan} from "./EditableSpan/EditableSpan";
-import {IconButton, Checkbox} from '@material-ui/core';
+import {Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
-import {useDispatch} from "react-redux";
-import {AddTaskTitleAC, changeTaskStatusAC, RemoveTaskAC} from "../../state/task-reducer";
-import {TaskType} from "../../features/TodoListsList/TodoLIst/Todolist";
+import {TaskStatuses, TaskType} from "../../api/todoList-api";
 
 
 export type PropsType = {
@@ -17,31 +15,14 @@ export type PropsType = {
 
 
 export const Task = React.memo((props: PropsType) => {
-        console.log('task')
 
 
-        // const removeTaskHandler = useCallback(() => {
-        //     dispatch(RemoveTaskAC(props.task.id, props.todoListId))
-        // },[RemoveTaskAC,props.task.id,props.todoListId])
-        // const isDoneHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        //     dispatch(changeTaskStatusAC(props.task.id, e.currentTarget.checked, props.todoListId))
-        // },[changeTaskStatusAC,props.task.id,props.todoListId])
-        // const changeTitleHandler = useCallback((title: string) => {
-        //     dispatch(AddTaskTitleAC(props.task.id, title, props.todoListId))
-        // },[AddTaskTitleAC,props.task.id,props.todoListId])
-
-
-        // const onChangeIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        //     props.isDoneHandler(e.currentTarget.checked)
-        // }
         const removeTask = () => {
             props.removeTaskHandler()
         }
-
         const onChangeIsDoneHandler = (e:ChangeEvent<HTMLInputElement>)=> {
             props.isDoneHandler(e.currentTarget.checked)
         }
-
         const changeTitle = useCallback((title: string) => {
             props.changeTitleHandler(title)
         },[props.changeTitleHandler])
@@ -51,7 +32,7 @@ export const Task = React.memo((props: PropsType) => {
                 <li className={'list'}>
                     <Checkbox
                         color={'primary'}
-                        checked={props.task.isDone}
+                        checked={props.task.status === TaskStatuses.Completed}
                         onChange={onChangeIsDoneHandler}
                         size={'small'}
                     />

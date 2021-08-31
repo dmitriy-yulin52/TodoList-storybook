@@ -7,17 +7,16 @@ import {
     addTodoListAC,
     changeTodoListFilterAC,
     changeTodoListTitleAC, fetchTodolistsThunkTC,
-    removeTodoListAC,
-    TodoListType
+    removeTodoListAC, TitleType, TodoListDomainType,
 } from "../../state/todoList-reducer";
-import {TitleType} from "../../app/App";
 import {AddItemForm} from "./TodoLIst/AddItemForm/AddItemForm";
+import {addTaskTC} from "../../state/task-reducer";
 
 
 export const TodoListsList = () => {
 
 
-    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoLists)
+    const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists)
     const dispatch = useDispatch()
 
     const changeTodoListFilter = useCallback((title: TitleType, todoListId: string) => {
@@ -37,6 +36,11 @@ export const TodoListsList = () => {
         dispatch(action)
     }, [dispatch])
 
+    const addTask = useCallback((title: string, todolistId: string)=>{
+        const thunk = addTaskTC(title,todolistId)
+        dispatch(thunk)
+    },[])
+
     useEffect(() => {
         dispatch(fetchTodolistsThunkTC())
     }, [])
@@ -53,11 +57,12 @@ export const TodoListsList = () => {
                                 <Paper style={{padding: '10px'}} elevation={5}>
                                     <Todolist
                                         todoListId={tl.id}
-                                        filter={tl.filter}
                                         title={tl.title}
+                                        filter={tl.filter}
                                         changeTodoListFilter={changeTodoListFilter}
                                         removeTodoList={removeTodoList}
                                         changeTodoListTitle={changeTodoListTitle}
+                                        addTask={addTask}
                                     />
                                 </Paper>
                             </Grid>

@@ -4,21 +4,20 @@ import {
     changeTodoListTitleAC,
     removeTodoListAC, TODOLIST_ACTION_TYPE,
     todoListReducer,
-    ToDoListType
+    TitleType, setTodolistsAC, TodoListDomainType
 } from "../state/todoList-reducer";
-import {TitleType} from "../app/App";
 
 let todoList_1: string
 let todoList_2: string
-let startState: Array<ToDoListType> = []
+let startState: Array<TodoListDomainType> = []
 
 beforeEach(() => {
     todoList_1 = v1()
     todoList_2 = v1()
 
     startState = [
-        {id: todoList_1, title: 'What to learn', filter: 'All'},
-        {id: todoList_2, title: 'What to buy', filter: 'All'}
+        {id: todoList_1, title: 'What to learn', filter: 'All',addedDate:'20:21',order:3},
+        {id: todoList_2, title: 'What to buy', filter: 'All',addedDate:'20:21',order:3}
     ]
 })
 
@@ -27,11 +26,9 @@ test('correct todolist should be removed', () => {
     const action = removeTodoListAC(todoList_1)
     const endState = todoListReducer(startState, action)
 
-
     expect(endState.length).toBe(1)
     expect(endState[0].id).toBe(todoList_2)
     expect(endState[0].title).toBe('What to buy')
-
 
 })
 test('correct todolist should be added', () => {
@@ -55,12 +52,10 @@ test('correct todolist should change its name', () => {
     expect(endState[1].id).toBe(todoList_2)
     expect(endState[1].title).toBe('Hello world!!!!')
 
-
 })
 test('correct filter of todolist should be changed', () => {
 
-
-    const filter:TitleType = "Completed"
+    const filter: TitleType = "Completed"
 
     const action = {
         type: TODOLIST_ACTION_TYPE.CHANGE_TODOLIST_FILTER,
@@ -68,13 +63,24 @@ test('correct filter of todolist should be changed', () => {
         todoListId: todoList_1
     }
 
-    const endState = todoListReducer(startState, changeTodoListFilterAC(action.title,action.todoListId))
-
+    const endState = todoListReducer(startState, changeTodoListFilterAC(action.title, action.todoListId))
 
     expect(endState.length).toBe(2)
     expect(endState[1].filter).toBe("All")
     expect(endState[1].id).toBe(todoList_2)
     expect(endState[0].filter).toBe(filter)
 
+
+})
+test('todoList should be set to the state', () => {
+
+
+    const action = setTodolistsAC(startState)
+
+    const endState = todoListReducer([],action)
+
+    expect(endState.length).toBe(2)
+    expect(endState[1].filter).toBe("All")
+    expect(endState[1].id).toBe(todoList_2)
 
 })
