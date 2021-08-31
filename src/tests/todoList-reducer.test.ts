@@ -6,7 +6,7 @@ import {
     todoListReducer,
     ToDoListType
 } from "../state/todoList-reducer";
-import {TitleType} from "../AppWithRedux";
+import {TitleType} from "../app/App";
 
 let todoList_1: string
 let todoList_2: string

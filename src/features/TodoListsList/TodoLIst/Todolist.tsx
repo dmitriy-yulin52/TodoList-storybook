@@ -1,14 +1,15 @@
-import React, { useCallback} from 'react'
-import {EditableSpan} from "../Task/EditableSpan/EditableSpan";
+import React, {useCallback, useEffect} from 'react'
+import {EditableSpan} from "../../../Components/Task/EditableSpan/EditableSpan";
 import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
-import {TitleType} from '../../AppWithRedux';
+import {TitleType} from '../../../app/App';
 
-import {Task} from "../Task/Task";
-import {AddTaskAC, AddTaskTitleAC, changeTaskStatusAC, RemoveTaskAC} from "../../state/task-reducer";
+import {Task} from "../../../Components/Task/Task";
+import {AddTaskAC, AddTaskTitleAC, changeTaskStatusAC, fetchTasksTC, RemoveTaskAC} from "../../../state/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
-import {AppRootStateType} from "../../state/store";
+import {AppRootStateType} from "../../../app/store";
+import {fetchTodolistsThunkTC} from "../../../state/todoList-reducer";
 
 export type TaskType = {
     title: string
@@ -63,6 +64,12 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
         dispatch(AddTaskAC(title, props.todoListId))
     }, [dispatch, props.todoListId])
 
+
+
+    useEffect(()=>{
+        const thunk = fetchTodolistsThunkTC()
+        dispatch(thunk)
+    },[])
 
     return (
         <div className="App">

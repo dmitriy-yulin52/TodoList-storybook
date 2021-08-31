@@ -4,7 +4,7 @@ import {IconButton, Checkbox} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {useDispatch} from "react-redux";
 import {AddTaskTitleAC, changeTaskStatusAC, RemoveTaskAC} from "../../state/task-reducer";
-import {TaskType} from "../TodoLIst/Todolist";
+import {TaskType} from "../../features/TodoListsList/TodoLIst/Todolist";
 
 
 export type PropsType = {
