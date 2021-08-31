@@ -18,7 +18,7 @@ type CommonResponseType<T = {}> = {
 }
 
 
-type TodoListType = {
+export type ResponseTodoListType = {
     id: string
     addedDate: string
     order: number
@@ -28,10 +28,10 @@ type TodoListType = {
 
 export const TodoListApi = {
     getTodoLists() {
-        return instance.get<Array<TodoListType>>('todo-lists')
+        return instance.get<Array<ResponseTodoListType>>('todo-lists')
     },
     createTodoLists() {
-        return instance.post<CommonResponseType<{ item: TodoListType }>>('todo-lists', {title: "newTodolist"})
+        return instance.post<CommonResponseType<{ item: ResponseTodoListType }>>('todo-lists', {title: "newTodolist"})
     },
     deleteTodoLists() {
         const todolistId = '54896ba7-93cf-40e1-b79f-0b8e2a58222d';

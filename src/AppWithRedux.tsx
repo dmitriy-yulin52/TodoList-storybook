@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from "./Components/TodoLIst/Todolist";
 import {AddItemForm} from "./Components/TodoLIst/AddItemForm/AddItemForm";
@@ -9,11 +9,12 @@ import {
     addTodoListAC,
     changeTodoListFilterAC,
     changeTodoListTitleAC,
-    removeTodoListAC, ToDoListType,
+    removeTodoListAC, setTodolistsAC, TodoListType,
 } from "./state/todoList-reducer";
 
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import {TodoListApi} from "./api/todoList-api";
 
 export type TitleType = "All" | "Active" | "Completed"
 
@@ -21,7 +22,7 @@ export type TitleType = "All" | "Active" | "Completed"
 export const AppWithRedux = React.memo(()=> {
     console.log('AppWithRedux')
 
-    const todoLists = useSelector<AppRootStateType, Array<ToDoListType>>(state=>state.todoLists)
+    const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state=>state.todoLists)
     const dispatch = useDispatch()
 
     const changeTodoListFilter = useCallback((title: TitleType, todoListId: string)=> {
@@ -40,6 +41,14 @@ export const AppWithRedux = React.memo(()=> {
         let action = changeTodoListTitleAC(title,todoListId)
         dispatch(action)
     },[dispatch])
+
+    useEffect(()=>{
+        TodoListApi.getTodoLists()
+            .then((res)=>{
+                let todos = res.data
+                dispatch(setTodolistsAC(todos))
+            })
+    },[])
 
 
 

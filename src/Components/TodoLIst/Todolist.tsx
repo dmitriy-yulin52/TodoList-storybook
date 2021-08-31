@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from 'react'
+import React, { useCallback} from 'react'
 import {EditableSpan} from "../Task/EditableSpan/EditableSpan";
 import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';

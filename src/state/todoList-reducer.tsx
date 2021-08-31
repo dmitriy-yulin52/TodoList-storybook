@@ -1,5 +1,6 @@
 import {v1} from "uuid";
 import {TitleType} from "../AppWithRedux";
+import {ResponseTodoListType} from "../api/todoList-api";
 
 
 
@@ -9,6 +10,7 @@ export enum TODOLIST_ACTION_TYPE {
     CHANGE_TODOLIST_TITLE = 'todoList-reducer/CHANGE-TODOLIST-TITLE',
     CHANGE_TODOLIST_FILTER = 'todoList-reducer/CHANGE-TODOLIST-FILTER',
     ADD_TODOLIST = 'todoList-reducer/ADD-TODOLIST',
+    SET_TODOlIST = 'todoList-reducer/SET-TODOlIST'
 }
 
 export type RemoveTodoListAT = {
@@ -31,7 +33,12 @@ export type ChangeTodoListFilterAT = {
     todoListId: string
 }
 
-export type ToDoListType = {
+export type SetTodolistsActionType = {
+    type: TODOLIST_ACTION_TYPE.SET_TODOlIST
+    todoLists: Array<ResponseTodoListType>
+}
+
+export type TodoListType = {
     id: string
     title: string
     filter: TitleType
@@ -42,18 +49,19 @@ export type ACType =
     | AddTodoListAT
     | ChangeTodoListTitleAT
     | ChangeTodoListFilterAT
+    | SetTodolistsActionType
 
-const initialState: Array<ToDoListType> = []
+const initialState: Array<TodoListType> = []
 
 
 
-export const todoListReducer = (todoLists: Array<ToDoListType> = initialState, action: ACType) => {
+export const todoListReducer = (todoLists: Array<TodoListType> = initialState, action: ACType) => {
 
     switch (action.type) {
         case TODOLIST_ACTION_TYPE.REMOVE_TODOLIST:
             return todoLists.filter(tl => tl.id !== action.todoListId)
         case TODOLIST_ACTION_TYPE.ADD_TODOLIST:
-            const newTodolist: ToDoListType = {
+            const newTodolist: TodoListType = {
                 id: action.todoListId,
                 title: action.title,
                 filter: 'All'
@@ -68,6 +76,12 @@ export const todoListReducer = (todoLists: Array<ToDoListType> = initialState, a
             })
         case TODOLIST_ACTION_TYPE.CHANGE_TODOLIST_FILTER:
             return todoLists.map(tl => tl.id === action.todoListId ? {...tl, filter: action.title} : tl)
+        case TODOLIST_ACTION_TYPE.SET_TODOlIST: {
+            return action.todoLists.map(tl => ({
+                ...tl,
+                filter: 'all'
+            }))
+        }
         default:
             return todoLists
     }
@@ -99,3 +113,12 @@ export const changeTodoListFilterAC = (title: TitleType, todoListId: string): Ch
         todoListId: todoListId
     }
 }
+
+export const setTodolistsAC = (todoLists: Array<ResponseTodoListType>): SetTodolistsActionType => {
+    return {
+        type: TODOLIST_ACTION_TYPE.SET_TODOlIST,
+        todoLists
+    }
+}
+
+
