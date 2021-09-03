@@ -7,10 +7,12 @@ import {
     fetchTasksTC,
     RemoveTaskAC,
 } from "../../../state/task-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {TitleType} from "../../../state/todoList-reducer";
 import {TaskStatuses, TaskType} from "../../../api/todoList-api";
+import {Preloader} from "../../../Preloader/Preloader";
+import {AppRootStateType} from "../../../app/store";
 
 
 type TodoListPropsType = {
@@ -20,8 +22,8 @@ type TodoListPropsType = {
     changeFilter: (value: TitleType, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
     changeTodoListTitle: (title: string, todoListId: string) => void
-    addTask: (title:string,todoListId:string) => void
-    tasks:Array<TaskType>
+    addTask: (title: string, todoListId: string) => void
+    tasks: Array<TaskType>
     changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
@@ -38,7 +40,7 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
     }, [props.todoListId])
 
     let addTask = useCallback((title: string) => {
-        props.addTask(title,props.todoListId)
+        props.addTask(title, props.todoListId)
     }, [props.addTask, props.todoListId])
 
 
@@ -95,14 +97,18 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
                             tasksForTodoList.map((t) => {
 
                                 return (
-                                    <Task
-                                        task={t}
-                                        todoListId={props.todoListId}
-                                        key={t.id}
-                                        removeTask={props.removeTask}
-                                        changeTaskStatus={props.changeTaskStatus}
-                                        changeTaskTitle={props.changeTaskTitle}
-                                    />
+                                    <>
+                                        {null ? <Preloader/> : null}
+                                        <Task
+                                            task={t}
+                                            todoListId={props.todoListId}
+                                            key={t.id}
+                                            removeTask={props.removeTask}
+                                            changeTaskStatus={props.changeTaskStatus}
+                                            changeTaskTitle={props.changeTaskTitle}
+                                        />
+                                    </>
+
                                 )
                             })
                         }

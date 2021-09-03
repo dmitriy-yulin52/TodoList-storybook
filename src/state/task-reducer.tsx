@@ -12,12 +12,14 @@ export enum ACTION_TYPE {
     REMOVE_TASK = 'task-reducer/REMOVE-TASK',
     ADD_TASK = 'task-reducer/ADD-TASK',
     UPDATE_TASK = 'task-reducer/CHANGE-TASK-STATUS',
-    SET_TASKS = 'task-reducer/SET-TASKS'
+    SET_TASKS = 'task-reducer/SET-TASKS',
+    IS_FETCHING = 'task-reducer/IS-FETCHING'
+
 }
 
 const initialState: TasksStateType = {}
 
-export const taskReducer = (state: TasksStateType = initialState, action: ACType):TasksStateType => {
+export const taskReducer = (state: TasksStateType = initialState, action: ACType): TasksStateType => {
 
     switch (action.type) {
         case ACTION_TYPE.REMOVE_TASK: {
@@ -57,6 +59,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
         case ACTION_TYPE.SET_TASKS: {
             return {...state, [action.todolistId]: action.tasks}
         }
+
         default:
             return state
 
@@ -93,7 +96,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
 //     todolistId: string
 // }
 
-export type UpdateDomainTaskModelType = {
+type UpdateDomainTaskModelType = {
     title?: string
     description?: string
     status?: TaskStatuses
@@ -151,6 +154,7 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => {
         todolistId
     } as const
 }
+
 // export const AddTaskTitleAC = (taskId: string, title: string, todoListId: string) => {
 //     return {
 //         type: ACTION_TYPE.ADD_TITLE_TASK,

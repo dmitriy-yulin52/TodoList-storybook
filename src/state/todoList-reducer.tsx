@@ -9,7 +9,8 @@ export enum TODOLIST_ACTION_TYPE {
     CHANGE_TODOLIST_TITLE = 'todoList-reducer/CHANGE-TODOLIST-TITLE',
     CHANGE_TODOLIST_FILTER = 'todoList-reducer/CHANGE-TODOLIST-FILTER',
     ADD_TODOLIST = 'todoList-reducer/ADD-TODOLIST',
-    SET_TODOlIST = 'todoList-reducer/SET-TODOlIST'
+    SET_TODOlIST = 'todoList-reducer/SET-TODOlIST',
+    IS_FETCHING = 'todoList-reducer/IS-FETCHING'
 }
 
 // export type RemoveTodoListAT = {
@@ -78,6 +79,7 @@ export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialSt
                 filter: 'All'
             }))
         }
+
         default:
             return todoLists
     }
@@ -118,6 +120,7 @@ export const setTodolistsAC = (todoLists: Array<TodoListTypeRes>) => {
         todoLists
     } as const
 }
+
 
 
 //thunk
