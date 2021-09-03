@@ -1,28 +1,66 @@
 import {
     AddTaskAC,
-    RemoveTaskAC,
+    RemoveTaskAC, setTasksAC,
     taskReducer,
     TasksStateType
 } from "../state/task-reducer";
 import {addTodoListAC, removeTodoListAC, setTodolistsAC, todoListReducer} from "../state/todoList-reducer";
-import {TodoListTypeRes} from "../api/todoList-api";
+import {TaskPriorities, TaskStatuses, TodoListTypeRes} from "../api/todoList-api";
 
 
-let startState: TodoListTypeRes
+let startState: TasksStateType = {}
 
 beforeEach(() => {
     startState = {
         'todoList_1': [
-            {id: '1', title: 'What to learn',addedDate:'20:21',order:1},
-            {id: '2', title: 'Js', addedDate:'20:21',order:2},
-            {id: '3', title: 'Redux', addedDate:'20:21',order:3},
-            {id: '4', title: 'MobX', addedDate:'20:21',order:4},
+
+            {
+                id: '1', title: 'What to learn', addedDate: '20:21', order: 1,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                description: ''
+            },
+            {
+                id: '2', title: 'React', addedDate: '20:21', order: 1,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                description: ''
+            },
+            {
+                id: '1', title: 'Css', addedDate: '20:21', order: 1,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                description: ''
+            },
         ],
         'todoList_2': [
-            {id: '1', title: 'Milk', addedDate:'20:21',order:3},
-            {id: '2', title: 'Football', addedDate:'20:21',order:3},
-            {id: '3', title: 'Programming', addedDate:'20:21',order:3},
-            {id: '4', title: 'Lite', addedDate:'20:21',order:3},
+            {
+                id: '1', title: 'Css', addedDate: '20:21', order: 1,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                description: ''
+            },
+            {
+                id: '2', title: 'HTML', addedDate: '20:21', order: 1,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                description: ''
+            },
         ]
     }
 })
@@ -89,7 +127,7 @@ test('new array should be added when new todolist is added', () => {
     const newKey = keys.find((k) => {
         return k != 'todoList_1' && k != 'todoList_2'
     })
-    if(!newKey){
+    if (!newKey) {
         throw Error('new key should be added')
     }
 
@@ -109,12 +147,12 @@ test('property with todolistId should be deleted', () => {
     expect(endState['todoList_2']).not.toBeDefined()
 
 })
-test('empty arrays should be added when we set todoLists', ()=> {
+test('empty arrays should be added when we set todoLists', () => {
     const action = setTodolistsAC([
-        {id: '1', title: 'What to learn',addedDate:'20:21',order:3},
-        {id: '2', title: 'What to learn',addedDate:'20:21',order:3}
+        {id: '1', title: 'What to learn', addedDate: '20:21', order: 3},
+        {id: '2', title: 'What to learn', addedDate: '20:21', order: 3}
     ])
-    const endState = taskReducer({},action)
+    const endState = taskReducer({}, action)
 
     const keys = Object.keys(endState)
 
@@ -122,4 +160,28 @@ test('empty arrays should be added when we set todoLists', ()=> {
     expect(endState['1']).toBeDefined()
     expect(endState['2']).toBeDefined()
     expect(endState['2']).toStrictEqual([])
+})
+test('task should be added for todoList', () => {
+
+
+    const action = setTasksAC(startState['todoList_1'],'todoList_1')
+
+    const endState = taskReducer({
+        'todoList_2':[],
+        'todoList_1':[
+            {
+                id: '4', title: 'Css', addedDate: '20:21', order: 1,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                todoListId: '',
+                description: ''
+            },
+        ],
+    },action)
+
+    expect(endState['todoList_1'].length).toBe(3)
+    expect(endState['todoList_2'].length).toBe(0)
+
 })

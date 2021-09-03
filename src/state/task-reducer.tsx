@@ -8,7 +8,12 @@ import {TaskPriorities, TaskStatuses, TaskType, TodoListApi, UpdateTaskModelType
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../app/store";
 
-
+export enum ACTION_TYPE {
+    REMOVE_TASK = 'task-reducer/REMOVE-TASK',
+    ADD_TASK = 'task-reducer/ADD-TASK',
+    UPDATE_TASK = 'task-reducer/CHANGE-TASK-STATUS',
+    SET_TASKS = 'task-reducer/SET-TASKS'
+}
 
 const initialState: TasksStateType = {}
 
@@ -58,12 +63,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
     }
 }
 //types
-export enum ACTION_TYPE {
-    REMOVE_TASK = 'task-reducer/REMOVE-TASK',
-    ADD_TASK = 'task-reducer/ADD-TASK',
-    UPDATE_TASK = 'task-reducer/CHANGE-TASK-STATUS',
-    SET_TASKS = 'task-reducer/SET-TASKS'
-}
+
 
 //
 // export type RemoveTaskActionACType = {
