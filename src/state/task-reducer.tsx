@@ -65,7 +65,6 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
 
     }
 }
-//types
 
 
 //
@@ -96,7 +95,8 @@ export const taskReducer = (state: TasksStateType = initialState, action: ACType
 //     todolistId: string
 // }
 
-type UpdateDomainTaskModelType = {
+//types
+export type UpdateDomainTaskModelType = {
     title?: string
     description?: string
     status?: TaskStatuses

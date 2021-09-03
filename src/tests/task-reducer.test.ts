@@ -2,7 +2,7 @@ import {
     AddTaskAC,
     RemoveTaskAC, setTasksAC,
     taskReducer,
-    TasksStateType
+    TasksStateType, UpdateDomainTaskModelType, updateTaskAC
 } from "../state/task-reducer";
 import {addTodoListAC, removeTodoListAC, setTodolistsAC, todoListReducer} from "../state/todoList-reducer";
 import {TaskPriorities, TaskStatuses, TodoListTypeRes} from "../api/todoList-api";
@@ -87,40 +87,75 @@ test('correct should be deleted from correct array', () => {
         ]
     })
 })
-test('correct should be added to correct array', () => {
+test('correct task should be added to correct array', () => {
 
-    const action = AddTaskAC('Hello world!', 'todoList_1')
+    const action = AddTaskAC(
+        {
+            id: '1',
+            title: 'Css',
+            addedDate: '20:21',
+            order: 1,
+            status: TaskStatuses.New,
+            priority: TaskPriorities.Low,
+            startDate: '',
+            deadline: '',
+            todoListId: 'todoListId2',
+            description: ''
+        }
+    )
     const endState = taskReducer(startState, action)
 
-    expect(endState['todoList_1'].length).toBe(5)
-    expect(endState['todoList_2'].length).toBe(4)
-    expect(endState['todoList_1'][0].id).toBeDefined()
-    expect(endState['todoList_1'][0].title).toBe('Hello world!')
-    expect(endState['todoList_1'][0].isDone).toBe(false)
+    expect(endState['todoList_1'].length).toBe(2)
+    expect(endState['todoList_2'].length).toBe(3)
+    expect(endState['todoList_2'][0].id).toBeDefined()
+    expect(endState['todoList_2'][0].title).toBe('Css')
+    expect(endState['todoList_2'][0].status).toBe(TaskStatuses.New)
 })
 test('status of specified task should be changed', () => {
 
-    const action = changeTaskStatusAC('1', true, 'todoList_1')
+    const modal= {
+        title: '',
+        description: '',
+        status: TaskStatuses.Completed,
+        priority: TaskPriorities.Later,
+        startDate: '',
+        deadline: ''
+    }
+    const action = updateTaskAC('1', modal, 'todoList_1')
     const endState = taskReducer(startState, action)
 
-    expect(endState['todoList_1'][0].isDone).toBe(true)
-    expect(endState['todoList_2'][1].isDone).toBe(true)
-    expect(endState['todoList_2'][2].isDone).toBe(false)
+    expect(endState['todoList_1'][0].status).toBe(TaskStatuses.Completed)
+    expect(endState['todoList_2'][1].status).toBe(TaskStatuses.New)
+    expect(endState['todoList_2'][1].title).toBe('HTML')
 
 })
 test('title of specified task should be changed', () => {
 
-    const action = AddTaskTitleAC('3', 'Hello world!', 'todoList_2')
+    const modal= {
+        title: 'c++',
+        description: '',
+        status: TaskStatuses.Completed,
+        priority: TaskPriorities.Later,
+        startDate: '',
+        deadline: ''
+    }
+    const action = updateTaskAC('2', modal, 'todoList_2')
     const endState = taskReducer(startState, action)
 
-    expect(endState['todoList_1'][0].title).toBe('React')
-    expect(endState['todoList_2'][2].title).toBe('Hello world!')
-    expect(endState['todoList_2'][1].title).toBe('Football')
+    expect(endState['todoList_2'][0].title).toBe('Css')
+    expect(endState['todoList_2'][1].title).toBe('c++')
 
 })
 test('new array should be added when new todolist is added', () => {
 
-    const action = addTodoListAC('Hello world!')
+
+    const toDo = {
+        id: '1',
+        title: 'Hello world!',
+        addedDate: '',
+        order: 4,
+    }
+    const action = addTodoListAC(toDo)
     const endState = taskReducer(startState, action)
 
     const keys = Object.keys(endState)
@@ -164,11 +199,11 @@ test('empty arrays should be added when we set todoLists', () => {
 test('task should be added for todoList', () => {
 
 
-    const action = setTasksAC(startState['todoList_1'],'todoList_1')
+    const action = setTasksAC(startState['todoList_1'], 'todoList_1')
 
     const endState = taskReducer({
-        'todoList_2':[],
-        'todoList_1':[
+        'todoList_2': [],
+        'todoList_1': [
             {
                 id: '4', title: 'Css', addedDate: '20:21', order: 1,
                 status: TaskStatuses.New,
@@ -179,7 +214,7 @@ test('task should be added for todoList', () => {
                 description: ''
             },
         ],
-    },action)
+    }, action)
 
     expect(endState['todoList_1'].length).toBe(3)
     expect(endState['todoList_2'].length).toBe(0)
