@@ -1,4 +1,3 @@
-import {v1} from "uuid";
 import {TodoListApi, TodoListTypeRes} from "../api/todoList-api";
 import {Dispatch} from "redux";
 
@@ -83,6 +82,8 @@ export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialSt
             return todoLists
     }
 }
+
+
 
 //action
 export const removeTodoListAC = (todoListId: string) => {
