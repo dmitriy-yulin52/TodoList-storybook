@@ -82,16 +82,14 @@ test('correct filter of todolist should be changed', () => {
 })
 test('todoLists should be to the state', () => {
 
-    const filter: TitleType = "Completed"
 
-    const action = setTodolistsAC()
-
-    const endState = todoListReducer(startState, changeTodoListFilterAC(action.title, action.todoListId))
+    const action = setTodolistsAC(startState)
+    const endState = todoListReducer([], action)
 
     expect(endState.length).toBe(2)
     expect(endState[1].filter).toBe("All")
     expect(endState[1].id).toBe(todoList_2)
-    expect(endState[0].filter).toBe(filter)
+    expect(endState[0].id).toBe(todoList_1)
 
 
 })
