@@ -103,7 +103,6 @@ export type UpdateDomainTaskModelType = {
     priority?: TaskPriorities
     startDate?: string
     deadline?: string
-    isFetching?:boolean
 }
 
 export type TasksStateType = {
@@ -184,13 +183,11 @@ export const fetchTasksTC = (todolistId: string) => {
     }
 }
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ACType>) => {
-    dispatch(isFetchingAC(true))
     TodoListApi.createTask(todolistId, title)
         .then(res => {
             const task = res.data.data.item
             const action = AddTaskAC(task)
             dispatch(action)
-            dispatch(isFetchingAC(false))
         })
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ACType>) => {

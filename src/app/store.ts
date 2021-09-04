@@ -6,7 +6,8 @@ import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
     tasks:taskReducer,
-    todoLists:todoListReducer
+    todoLists:todoListReducer,
+
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))

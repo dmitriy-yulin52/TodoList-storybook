@@ -97,7 +97,7 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
 
                                 return (
                                     <>
-                                        {t.isFetching && <Preloader/>}
+                                        {null && <Preloader/>}
                                         <Task
                                             task={t}
                                             todoListId={props.todoListId}

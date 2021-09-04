@@ -46,7 +46,6 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
-    isFetching?: boolean
 }
 export type UpdateTaskModelType = {
     title: string
