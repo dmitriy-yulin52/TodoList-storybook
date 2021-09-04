@@ -35,7 +35,7 @@ test('correct todolist should be added', () => {
 
 
     const action = addTodoListAC(
-        {id: todoList_1,
+        {id: '1',
             title: 'Hello world!',
             addedDate:'20:21',
             order:3
@@ -46,7 +46,6 @@ test('correct todolist should be added', () => {
     expect(endState.length).toBe(3)
     expect(endState[0].title).toBe('Hello world!')
     expect(endState[0].addedDate).toBe('20:21')
-    expect(endState[1].addedDate).toBe('What to learn')
 
 
 })
