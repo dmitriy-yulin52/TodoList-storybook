@@ -11,7 +11,7 @@ test('id should be equals',()=>{
         id: '1',
         title: 'hello',
         addedDate: '',
-        order: 1
+        order: 5
     })
 
     const endTaskState = taskReducer(startTaskState,action)
