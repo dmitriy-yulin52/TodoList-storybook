@@ -3,6 +3,7 @@ import {IconButton, TextField} from '@material-ui/core'
 import {AddBox} from '@material-ui/icons';
 
 
+
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
@@ -13,6 +14,7 @@ export const  AddItemForm = React.memo( (props: AddItemFormPropsType)=> {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<null | string>(null)
     const errorMessage = 'Title is required'
+
 
     const addItem = () => {
         const titleTrim = title.trim()
@@ -53,7 +55,9 @@ export const  AddItemForm = React.memo( (props: AddItemFormPropsType)=> {
             >
                 <AddBox fontSize={'large'}/>
             </IconButton>
-            <div style={error ? {color: 'red'} : {display: 'none'}}>{errorMessage}</div>
+            <div
+                style={error ? {color: 'red'} : {display: 'none'}}
+            >{errorMessage}</div>
         </div>
     )
 })

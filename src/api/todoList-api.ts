@@ -12,7 +12,6 @@ export type TodoListTypeRes = {
     title: string
     addedDate: string
     order: number
-    isFetching?:false
 
 }
 export type ResponseType<D = {}> = {

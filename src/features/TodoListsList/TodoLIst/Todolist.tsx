@@ -32,6 +32,8 @@ type TodoListPropsType = {
 
 export const Todolist = React.memo((props: TodoListPropsType) => {
 
+
+    const {isFetch} = useSelector((state:AppRootStateType)=>state.todoLists)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -92,13 +94,16 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
                 </div>
                 <React.Fragment>
                     <ul>
+                        {isFetch ? <Preloader/> :
+                            <div>!!!!!!!!!!!!!!</div>
+                        }
                         {
 
                             tasksForTodoList.map((t) => {
 
                                 return (
                                     <>
-                                        {null ? <Preloader/> : null}
+
                                         <Task
                                             task={t}
                                             todoListId={props.todoListId}

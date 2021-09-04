@@ -49,11 +49,12 @@ export type ACType =
     | AddTodolistActionType
     | ReturnType<typeof changeTodoListTitleAC>
     | ReturnType<typeof changeTodoListFilterAC>
+    | ReturnType<typeof isFetchingAC>
     | SetTodolistsActionType
 
 const initialState: Array<TodoListDomainType> = []
 export type TodoListDomainType = TodoListTypeRes & {
-    filter: TitleType
+    filter: TitleType,
 }
 
 
@@ -79,6 +80,10 @@ export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialSt
                 filter: 'All'
             }))
         }
+        case TODOLIST_ACTION_TYPE.IS_FETCHING:
+            return todoLists.map((tl)=> {
+                return {...tl,isFetch:action.fetch}
+            })
 
         default:
             return todoLists
@@ -118,6 +123,12 @@ export const setTodolistsAC = (todoLists: Array<TodoListTypeRes>) => {
     return {
         type: TODOLIST_ACTION_TYPE.SET_TODOlIST,
         todoLists
+    } as const
+}
+export const isFetchingAC = (fetch:boolean) => {
+    return {
+        type: TODOLIST_ACTION_TYPE.IS_FETCHING,
+        fetch
     } as const
 }
 
