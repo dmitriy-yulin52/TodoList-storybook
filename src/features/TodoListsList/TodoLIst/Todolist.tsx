@@ -5,14 +5,12 @@ import {Delete} from '@material-ui/icons';
 import {Task} from "../../../Components/Task/Task";
 import {
     fetchTasksTC,
-    RemoveTaskAC,
 } from "../../../state/task-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {TitleType} from "../../../state/todoList-reducer";
 import {TaskStatuses, TaskType} from "../../../api/todoList-api";
 import {Preloader} from "../../../Preloader/Preloader";
-import {AppRootStateType} from "../../../app/store";
 
 
 type TodoListPropsType = {
@@ -33,7 +31,6 @@ type TodoListPropsType = {
 export const Todolist = React.memo((props: TodoListPropsType) => {
 
 
-    const {isFetch} = useSelector((state:AppRootStateType)=>state.todoLists)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -94,8 +91,8 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
                 </div>
                 <React.Fragment>
                     <ul>
-                        {isFetch ? <Preloader/> :
-                            <div>!!!!!!!!!!!!!!</div>
+                        {null ? <Preloader/> : null
+
                         }
                         {
 

@@ -69,12 +69,11 @@ export const TodoListApi = {
         return instance.post<ResponseType<{ item: TodoListTypeRes }>>('todo-lists', {title: title})
     },
     deleteTodoList(id:string) {
-        const promise = instance.delete<ResponseType>(`todo-lists/${id}`)
-        return promise
+        return instance.delete<ResponseType>(`todo-lists/${id}`)
+
     },
-    updateTodoLists(id:string,title:string) {
-        const promise = instance.put<ResponseType>(`todo-lists/${id}`, {title: title})
-        return promise
+    updateTodoLists(title:string,id:string) {
+        return instance.put<ResponseType>(`todo-lists/${id}`, {title: title})
     },
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
