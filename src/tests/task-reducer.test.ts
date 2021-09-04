@@ -2,20 +2,22 @@ import {
     AddTaskAC,
     RemoveTaskAC, setTasksAC,
     taskReducer,
-    TasksStateType, UpdateDomainTaskModelType, updateTaskAC
+    TasksStateType, updateTaskAC
 } from "../state/task-reducer";
-import {addTodoListAC, removeTodoListAC, setTodolistsAC, todoListReducer} from "../state/todoList-reducer";
-import {TaskPriorities, TaskStatuses, TodoListTypeRes} from "../api/todoList-api";
+import {addTodoListAC, removeTodoListAC, setTodolistsAC} from "../state/todoList-reducer";
+import {TaskPriorities, TaskStatuses} from "../api/todoList-api";
 
 
 let startState: TasksStateType = {}
 
 beforeEach(() => {
     startState = {
-        'todoList_1': [
-
+        'todoListId1': [
             {
-                id: '1', title: 'What to learn', addedDate: '20:21', order: 1,
+                id: '1',
+                title: 'What to learn',
+                addedDate: '20:21',
+                order: 1,
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Low,
                 startDate: '',
@@ -42,7 +44,7 @@ beforeEach(() => {
                 description: ''
             },
         ],
-        'todoList_2': [
+        'todoListId2': [
             {
                 id: '1', title: 'Css', addedDate: '20:21', order: 1,
                 status: TaskStatuses.New,
@@ -91,25 +93,25 @@ test('correct task should be added to correct array', () => {
 
     const action = AddTaskAC(
         {
-            id: '1',
-            title: 'Css',
-            addedDate: '20:21',
-            order: 1,
+            id: 'id ex',
+            title: 'Hello!',
+            addedDate: '20:22',
+            order: 0,
             status: TaskStatuses.New,
-            priority: TaskPriorities.Low,
+            priority: 0,
             startDate: '',
             deadline: '',
-            todoListId: 'todoListId2',
+            todoListId: 'todolistId3',
             description: ''
         }
     )
     const endState = taskReducer(startState, action)
 
-    expect(endState['todoList_1'].length).toBe(2)
-    expect(endState['todoList_2'].length).toBe(3)
-    expect(endState['todoList_2'][0].id).toBeDefined()
-    expect(endState['todoList_2'][0].title).toBe('Css')
-    expect(endState['todoList_2'][0].status).toBe(TaskStatuses.New)
+    expect(endState['todoListId1'].length).toBe(2)
+    expect(endState['todoListId2'].length).toBe(3)
+    expect(endState['todoListId2'][0].id).toBeDefined()
+    expect(endState['todoListId2'][0].title).toBe('Hello!')
+    expect(endState['todoListId2'][0].status).toBe(TaskStatuses.New)
 })
 test('status of specified task should be changed', () => {
 
