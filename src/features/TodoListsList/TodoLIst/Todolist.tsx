@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {EditableSpan} from "../../../Components/Task/EditableSpan/EditableSpan";
 import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
@@ -91,16 +91,13 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
                 </div>
                 <React.Fragment>
                     <ul>
-                        {null ? <Preloader/> : null
-
-                        }
                         {
 
                             tasksForTodoList.map((t) => {
 
                                 return (
                                     <>
-
+                                        {t.isFetching && <Preloader/>}
                                         <Task
                                             task={t}
                                             todoListId={props.todoListId}

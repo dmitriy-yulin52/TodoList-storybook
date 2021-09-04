@@ -103,6 +103,7 @@ export type UpdateDomainTaskModelType = {
     priority?: TaskPriorities
     startDate?: string
     deadline?: string
+    isFetching?:boolean
 }
 
 export type TasksStateType = {
@@ -117,6 +118,7 @@ export type ACType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
+    | ReturnType<typeof isFetchingAC>
 
 //actions
 export const RemoveTaskAC = (taskId: string, todoListId: string) => {
@@ -154,6 +156,12 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => {
         todolistId
     } as const
 }
+export const isFetchingAC = (fetching: boolean) => {
+    return {
+        type: ACTION_TYPE.IS_FETCHING,
+        fetching
+    } as const
+}
 
 // export const AddTaskTitleAC = (taskId: string, title: string, todoListId: string) => {
 //     return {
@@ -176,11 +184,13 @@ export const fetchTasksTC = (todolistId: string) => {
     }
 }
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ACType>) => {
+    dispatch(isFetchingAC(true))
     TodoListApi.createTask(todolistId, title)
         .then(res => {
             const task = res.data.data.item
             const action = AddTaskAC(task)
             dispatch(action)
+            dispatch(isFetchingAC(false))
         })
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ACType>) => {
