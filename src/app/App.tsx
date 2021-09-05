@@ -29,7 +29,7 @@ export const App = React.memo(() => {
                     >
                         Login</Button>
                 </Toolbar>
-                <LinearProgress />
+                {/*<LinearProgress />*/}
             </AppBar>
             <Container fixed>
                 <TodoListsList/>
