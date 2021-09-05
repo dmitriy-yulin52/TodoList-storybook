@@ -6,11 +6,16 @@ import {Menu} from '@material-ui/icons';
 
 import {TodoListsList} from "../features/TodoListsList/TodoListsList";
 import {ErrorSnackBar} from "../Components/ErrorSnackBar/ErrorSnackBar";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./store";
+import {RequestStatusType} from "./app-reducer";
 
 
 
 
-export const App = React.memo(() => {
+export const App = () => {
+
+    const status = useSelector<AppRootStateType, RequestStatusType>((state)=>state.app.status)
 
     return (
         <div className={'App'}>
@@ -29,12 +34,12 @@ export const App = React.memo(() => {
                     >
                         Login</Button>
                 </Toolbar>
-                {/*<LinearProgress />*/}
+                { status === 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
                 <TodoListsList/>
             </Container>
         </div>
     );
-})
+}
 

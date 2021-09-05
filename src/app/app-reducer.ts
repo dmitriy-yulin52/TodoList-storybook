@@ -44,10 +44,11 @@ export const setStatusAC = (status: RequestStatusType) => {
 
 
 export type SettErrorAT = ReturnType<typeof setErrorAC>
+export type SetStatusAT = ReturnType<typeof setStatusAC>
 
 type ActionsType =
-    SettErrorAT
-    | ReturnType<typeof setStatusAC>
+    | SettErrorAT
+    | SetStatusAT
 
 
 
