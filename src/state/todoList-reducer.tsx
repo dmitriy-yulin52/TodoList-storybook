@@ -11,7 +11,7 @@ export enum TODOLIST_ACTION_TYPE {
     CHANGE_TODOLIST_FILTER = 'todoList-reducer/CHANGE-TODOLIST-FILTER',
     ADD_TODOLIST = 'todoList-reducer/ADD-TODOLIST',
     SET_TODOlIST = 'todoList-reducer/SET-TODOlIST',
-    IS_FETCHING = 'todoList-reducer/IS-FETCHING'
+    CHANGE_TODOLIST_ENTITY_STATUS = 'todoList-reducer/CHANGE_TODOLIST_ENTITY_STATUS',
 }
 
 // export type RemoveTodoListAT = {
@@ -52,6 +52,8 @@ export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialSt
             })
         case TODOLIST_ACTION_TYPE.CHANGE_TODOLIST_FILTER:
             return todoLists.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
+        case TODOLIST_ACTION_TYPE.CHANGE_TODOLIST_ENTITY_STATUS:
+            return todoLists.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
         case TODOLIST_ACTION_TYPE.SET_TODOlIST: {
             return action.todoLists.map(tl => ({
                 ...tl,
@@ -59,10 +61,6 @@ export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialSt
                 entityStatus: 'idle'
             }))
         }
-        case TODOLIST_ACTION_TYPE.IS_FETCHING:
-            return todoLists.map((tl)=> {
-                return {...tl,isFetch:action.fetch}
-            })
 
         default:
             return todoLists
@@ -98,16 +96,17 @@ export const changeTodoListFilterAC = (filter: TitleType, id: string)=> {
         id
     }as const
 }
+export const changeTodoListEntityStatusAC = (status: RequestStatusType, id: string)=> {
+    return {
+        type: TODOLIST_ACTION_TYPE.CHANGE_TODOLIST_ENTITY_STATUS,
+        status,
+        id
+    }as const
+}
 export const setTodolistsAC = (todoLists: Array<TodoListTypeRes>) => {
     return {
         type: TODOLIST_ACTION_TYPE.SET_TODOlIST,
         todoLists
-    } as const
-}
-export const isFetchingAC = (fetch:boolean) => {
-    return {
-        type: TODOLIST_ACTION_TYPE.IS_FETCHING,
-        fetch
     } as const
 }
 
@@ -125,7 +124,9 @@ export const fetchTodolistsTC = () => {
     }
 }
 export const removeTodolistTC = (todolistId: string) => {
+
     return (dispatch: Dispatch<ACType>) => {
+
         TodoListApi.deleteTodoList(todolistId)
             .then((res) => {
                 dispatch(removeTodoListAC(todolistId))
@@ -168,8 +169,9 @@ export type ACType =
     | AddTodolistActionType
     | ReturnType<typeof changeTodoListTitleAC>
     | ReturnType<typeof changeTodoListFilterAC>
-    | ReturnType<typeof isFetchingAC>
+    | ReturnType<typeof changeTodoListEntityStatusAC>
     | SetTodolistsActionType
+
 
 const initialState: Array<TodoListDomainType> = []
 export type TodoListDomainType = TodoListTypeRes & {

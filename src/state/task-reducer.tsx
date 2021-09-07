@@ -190,7 +190,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
                 dispatch(action)
                 dispatch(setStatusAC('succeeded'))
             }else{
-                if(res.data.messages.length){
+                if(res.data.messages.length > 100){
                     dispatch(setErrorAC(res.data.messages[0]))
                 }else{
                     dispatch(setErrorAC('Some error occured'))

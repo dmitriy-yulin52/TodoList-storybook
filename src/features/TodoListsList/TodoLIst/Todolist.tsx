@@ -90,11 +90,11 @@ export const Todolist = React.memo(({demo = false,...props}: TodoListPropsType) 
                         color={'primary'}
                         disabled={props.todoList.entityStatus === 'loading'}
                     >
-                        <Delete fontSize={'small'}/>
+                        <Delete fontSize={'small'} />
                     </IconButton>
                 </h3>
                 <div>
-                    <AddItemForm addItem={addTask}/>
+                    <AddItemForm addItem={addTask} disabled={props.todoList.entityStatus === 'loading'}/>
                 </div>
                 <React.Fragment>
                     <ul>
