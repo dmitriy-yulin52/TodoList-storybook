@@ -42,7 +42,7 @@ export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialSt
         case TODOLIST_ACTION_TYPE.REMOVE_TODOLIST:
             return todoLists.filter(tl => tl.id !== action.todoListId)
         case TODOLIST_ACTION_TYPE.ADD_TODOLIST:
-            return [{...action.todolist,filter: 'All'},...todoLists]
+            return [{...action.todolist,filter: 'All',entityStatus: 'idle'},...todoLists]
         case TODOLIST_ACTION_TYPE.CHANGE_TODOLIST_TITLE:
             return todoLists.map((el) => {
                 if (el.id === action.id) {
@@ -55,7 +55,8 @@ export const todoListReducer = (todoLists: Array<TodoListDomainType> = initialSt
         case TODOLIST_ACTION_TYPE.SET_TODOlIST: {
             return action.todoLists.map(tl => ({
                 ...tl,
-                filter: 'All'
+                filter: 'All',
+                entityStatus: 'idle'
             }))
         }
         case TODOLIST_ACTION_TYPE.IS_FETCHING:
