@@ -97,12 +97,12 @@ test('correct status of todolist should be changed', () => {
 
     const status: RequestStatusType = "loading"
 
-    const action = changeTodoListEntityStatusAC(status,todoList_2)
+    const action = changeTodoListEntityStatusAC(status,todoList_1)
 
     const endState = todoListReducer(startState, action)
 
-    expect(endState[0].entityStatus).toBe('idle')
-    expect(endState[1].entityStatus).toBe("loading")
+    expect(endState[0].entityStatus).toBe('loading')
+    expect(endState[1].entityStatus).toBe("idle")
 
 
 })
