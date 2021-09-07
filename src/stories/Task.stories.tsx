@@ -4,9 +4,6 @@ import {PropsType, Task} from "../Components/Task/Task";
 import {action} from "@storybook/addon-actions";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todoList-api";
 import {v1} from "uuid";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../app/store";
-import {TasksStateType} from "../state/task-reducer";
 import {Story} from "@storybook/react";
 
 export default {

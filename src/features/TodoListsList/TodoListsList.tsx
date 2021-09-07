@@ -14,14 +14,22 @@ import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "../../state
 import {TaskStatuses} from "../../api/todoList-api";
 
 
-export const TodoListsList = () => {
 
+type TodoListsListType = {
+    demo?:boolean
+}
+
+
+export const TodoListsList:React.FC<TodoListsListType> = ({demo = false}) => {
 
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if(demo){
+            return
+        }
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -77,9 +85,7 @@ export const TodoListsList = () => {
                             <Grid item key={tl.id}>
                                 <Paper style={{padding: '10px'}} elevation={5}>
                                     <Todolist
-                                        todoListId={tl.id}
-                                        title={tl.title}
-                                        filter={tl.filter}
+                                        todoList={tl}
                                         changeFilter={changeFilter}
                                         removeTodoList={removeTodoList}
                                         changeTodoListTitle={changeTodoListTitle}
@@ -88,6 +94,7 @@ export const TodoListsList = () => {
                                         changeTaskStatus={changeStatus}
                                         removeTask={removeTask}
                                         changeTaskTitle={changeTaskTitle}
+                                        demo={demo}
                                     />
                                 </Paper>
                             </Grid>

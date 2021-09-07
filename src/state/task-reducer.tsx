@@ -118,7 +118,6 @@ export type ACType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
-    | ReturnType<typeof isFetchingAC>
 
 //actions
 export const RemoveTaskAC = (taskId: string, todoListId: string) => {
@@ -156,12 +155,7 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) => {
         todolistId
     } as const
 }
-export const isFetchingAC = (fetching: boolean) => {
-    return {
-        type: ACTION_TYPE.IS_FETCHING,
-        fetching
-    } as const
-}
+
 
 // export const AddTaskTitleAC = (taskId: string, title: string, todoListId: string) => {
 //     return {

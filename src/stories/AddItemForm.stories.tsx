@@ -6,6 +6,7 @@ import {action} from "@storybook/addon-actions";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled:boolean
 }
 
 
@@ -29,4 +30,14 @@ export const AddItemFormBaseExample = Template.bind({})
 
 AddItemFormBaseExample.args = {
     addItem: action('Button inside form clicked')
+}
+
+const TemplateDisabled:Story<AddItemFormPropsType> = (args)=> <AddItemForm {...args}/>
+
+
+export const AddItemFormBaseExampleDisabled = TemplateDisabled.bind({})
+
+AddItemFormBaseExampleDisabled.args = {
+    addItem: action('Button inside form clicked'),
+    disabled:true
 }
