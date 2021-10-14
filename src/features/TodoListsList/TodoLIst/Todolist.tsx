@@ -33,7 +33,6 @@ type TodoListPropsType = {
 export const Todolist = React.memo(({demo = false,...props}: TodoListPropsType) => {
 
 
-
     const dispatch = useDispatch()
 
     useEffect(() => {
