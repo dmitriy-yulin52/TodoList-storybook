@@ -87,5 +87,17 @@ export const TodoListApi = {
     updateTask(todolistId:string, taskId:string, model:UpdateTaskModelType){
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`,model)
     }
+};
+
+
+export const authApi = {
+    login(email:string,password:string,rememberMe:boolean,captcha:boolean){
+        return instance.post('login',{
+            email,
+            password,
+            rememberMe,
+            captcha,
+        })
+    }
 }
 
